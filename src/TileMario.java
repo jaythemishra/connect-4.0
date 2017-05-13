@@ -4,10 +4,10 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 
-public class Mario extends MovingImage {
+public class TileMario extends MovingImage {
 
-	public static final int MARIO_WIDTH = 40;
-	public static final int MARIO_HEIGHT = 60;
+	public static final int MARIO_WIDTH = 90;
+	public static final int MARIO_HEIGHT = 90;
 
 	private double xVelocity, yVelocity;
 	private boolean onASurface;
@@ -15,7 +15,7 @@ public class Mario extends MovingImage {
 	private double gravity;
 	private double jumpStrength;
 
-	public Mario(int x, int y) {
+	public TileMario(int x, int y) {
 		super("mario.png", x, y, MARIO_WIDTH, MARIO_HEIGHT);
 		xVelocity = 0;
 		yVelocity = 0;

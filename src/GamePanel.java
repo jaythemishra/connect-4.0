@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements Runnable
 
   private Rectangle screenRect;
 	
-  private Mario mario;
+  private TileMario mario;
   private Rectangle[][] grid;
 
   
@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable
 	  super();
 	  
 	  keyControl = new KeyHandler();
-	  setBackground(Color.YELLOW);
+	  setBackground(Color.WHITE);
 	  screenRect = new Rectangle(0,0,DRAWING_WIDTH,DRAWING_HEIGHT);
 	  grid = new Rectangle[7][7];
 	  for(int row = 0; row < grid.length; row++) {
@@ -55,13 +55,16 @@ public class GamePanel extends JPanel implements Runnable
     AffineTransform at = g2.getTransform();
     g2.scale(ratioX, ratioY);
 
-    g.setColor(Color.BLACK);
     for (Rectangle[] row : grid) {
     	for(Rectangle col : row) {
-    		g2.draw(col);
+    	   // g2.draw(col);
+    	    g2.setColor(Color.YELLOW);
+    		g2.fill(col);
+    	    g2.setColor(Color.WHITE);
+    		g2.fillOval((int)col.getX() + 5, (int)col.getY() + 5, (int)col.getWidth() - 10, (int)col.getHeight() - 10);
     	}
     }
-    mario.draw(g2,this);
+    //mario.draw(g2,this);
     
     g2.setTransform(at);
 
@@ -70,7 +73,7 @@ public class GamePanel extends JPanel implements Runnable
 
   
   public void spawnNewMario() {
-	  mario = new Mario(DRAWING_WIDTH/2-Mario.MARIO_WIDTH/2,50);
+	  mario = new TileMario(DRAWING_WIDTH/2-TileMario.MARIO_WIDTH/2,50);
   }
   
   public KeyHandler getKeyHandler() {
