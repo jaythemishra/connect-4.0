@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 
-public class TileMario extends MovingImage {
+public class Tile extends MovingImage {
 
 	public static final int MARIO_WIDTH = 90;
 	public static final int MARIO_HEIGHT = 90;
@@ -15,7 +15,7 @@ public class TileMario extends MovingImage {
 	private double gravity;
 	private double jumpStrength;
 
-	public TileMario(int x, int y) {
+	public Tile(int x, int y) {
 		super("mario.png", x, y, MARIO_WIDTH, MARIO_HEIGHT);
 		xVelocity = 0;
 		yVelocity = 0;
@@ -36,7 +36,7 @@ public class TileMario extends MovingImage {
 			yVelocity -= jumpStrength;
 	}
 
-	public void act(ArrayList<Shape> obstacles) {
+	public void act(Tile[][] tiles) {
 		double xCoord = getX();
 		double yCoord = getY();
 		double width = getWidth();
@@ -53,7 +53,7 @@ public class TileMario extends MovingImage {
 
 		if (yVelocity > 0) {
 			Shape standingSurface = null;
-			for (Shape s : obstacles) {
+			for (Tile s : tiles) {
 				if (s.intersects(strechY)) {
 					onASurface = true;
 					standingSurface = s;
