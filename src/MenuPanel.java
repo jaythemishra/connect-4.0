@@ -20,10 +20,10 @@ public class MenuPanel extends JPanel implements ActionListener {
 		JButton playButton = new JButton("Play Game");
 
 
-		instructionButton.addActionListener(this);
-		add(instructionButton);
-		settingsButton.addActionListener(this);
-		add(settingsButton);
+		//instructionButton.addActionListener(this);
+		//add(instructionButton);
+		//settingsButton.addActionListener(this);
+		//add(settingsButton);
 		playButton.addActionListener(this);
 		add(playButton);
 	}
