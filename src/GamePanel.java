@@ -20,26 +20,25 @@ public class GamePanel extends JPanel implements Runnable
   private Tile mario;
   private Tile[][] tiles;
   private Rectangle[][] grid;
-
+  private boolean currentPlayer;
   
   private KeyHandler keyControl;
 
 
   public GamePanel () {
 	  super();
-	  
+	  currentPlayer = true;
 	  keyControl = new KeyHandler();
 	  setBackground(Color.WHITE);
 	  screenRect = new Rectangle(0,0,DRAWING_WIDTH,DRAWING_HEIGHT);
 	  tiles = new Tile[7][7];
-	  tiles[4][4] = new Tile(0, 0);
+	  //tiles[4][4] = new Tile(true);
 	  grid = new Rectangle[7][7];
 	  for(int row = 0; row < grid.length; row++) {
 		  for(int col = 0; col < grid[0].length; col++) {
 			  grid[row][col] = new Rectangle(50 + row * RECT_WIDTH, 50 + col * RECT_HEIGHT, RECT_WIDTH, RECT_HEIGHT);
 		  }
 	  }
-	  spawnNewMario();
 	  new Thread(this).start();
   }
 
@@ -66,7 +65,10 @@ public class GamePanel extends JPanel implements Runnable
     		g2.fill(r);
     	    g2.setColor(Color.WHITE);
     	    if(tiles[row][col] != null) {
-        	    g2.setColor(Color.RED);
+    	    	if(tiles[row][col].getPlayer() == true)
+    	    		g2.setColor(Color.RED);
+    	    	else
+    	    		g2.setColor(Color.BLACK);
     	    } else
         	    g2.setColor(Color.WHITE);
 
@@ -80,10 +82,16 @@ public class GamePanel extends JPanel implements Runnable
 	// TODO Add any custom drawings here
   }
 
-  
-  public void spawnNewMario() {
-	  mario = new Tile(DRAWING_WIDTH/2-Tile.MARIO_WIDTH/2,50);
+  public void addTile(int col) {
+	  for(int row = tiles.length - 1; row > -1; row--) {
+		  if(tiles[col-1][row] == null) {
+			  currentPlayer = !currentPlayer;
+			  tiles[col-1][row] = new Tile(currentPlayer);
+			  return;
+		  }
+	  }
   }
+  
   
   public KeyHandler getKeyHandler() {
 	  return keyControl;
@@ -94,12 +102,28 @@ public class GamePanel extends JPanel implements Runnable
 	while (true) { // Modify this to allow quitting
 		long startTime = System.currentTimeMillis();
 		
-		if (keyControl.isPressed(KeyEvent.VK_LEFT))
-	  		mario.walk(-1);
-		if (keyControl.isPressed(KeyEvent.VK_RIGHT))
-	  		mario.walk(1);
-		if (keyControl.isPressed(KeyEvent.VK_UP))
-	  		mario.jump();
+		/*if (keyControl.isPressed(KeyEvent.VK_1)) {
+			currentPlayer = !currentPlayer;
+	  		addTile(1, currentPlayer);
+		} if (keyControl.isPressed(KeyEvent.VK_2)) {
+			currentPlayer = !currentPlayer;
+	  		addTile(2, currentPlayer);
+		} if (keyControl.isPressed(KeyEvent.VK_3)) {
+			currentPlayer = !currentPlayer;
+	  		addTile(3, currentPlayer);
+		} if (keyControl.isPressed(KeyEvent.VK_4)) {
+			currentPlayer = !currentPlayer;
+	  		addTile(4, currentPlayer);
+		} if (keyControl.isPressed(KeyEvent.VK_5)) {
+			currentPlayer = !currentPlayer;
+	  		addTile(5, currentPlayer);
+		} if (keyControl.isPressed(KeyEvent.VK_6)) {
+			currentPlayer = !currentPlayer;
+	  		addTile(6, currentPlayer);
+		} if (keyControl.isPressed(KeyEvent.VK_7)) {
+			currentPlayer = !currentPlayer;
+	  		addTile(7, currentPlayer);
+		}*/
 	
 	  	//mario.act(grid);
 	  	
@@ -136,6 +160,27 @@ public class GamePanel extends JPanel implements Runnable
 		  Integer code = e.getKeyCode();
 		  while(keys.contains(code))
 			  keys.remove(code);
+		  if(e.getKeyCode() == KeyEvent.VK_1) {
+			  addTile(1);
+		  }
+		  if(e.getKeyCode() == KeyEvent.VK_2) {
+			  addTile(2);
+		  }
+		  if(e.getKeyCode() == KeyEvent.VK_3) {
+			  addTile(3);
+		  }
+		  if(e.getKeyCode() == KeyEvent.VK_4) {
+			  addTile(4);
+		  }
+		  if(e.getKeyCode() == KeyEvent.VK_5) {
+			  addTile(5);
+		  }
+		  if(e.getKeyCode() == KeyEvent.VK_6) {
+			  addTile(6);
+		  }
+		  if(e.getKeyCode() == KeyEvent.VK_7) {
+			  addTile(7);
+		  }
 	  }
 
 	  public void keyTyped(KeyEvent e) {

@@ -4,29 +4,31 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 
-public class Tile extends MovingImage {
+public class Tile /*extends MovingImage*/ {
 
 	public static final int MARIO_WIDTH = 90;
 	public static final int MARIO_HEIGHT = 90;
 
-	private double xVelocity, yVelocity;
+	private boolean player;
+	/*private double xVelocity, yVelocity;
 	private boolean onASurface;
 	private double friction;
 	private double gravity;
-	private double jumpStrength;
+	private double jumpStrength;*/
 
-	public Tile(int x, int y) {
-		super("mario.png", x, y, MARIO_WIDTH, MARIO_HEIGHT);
+	public Tile(boolean player) {
+		/*super("mario.png", x, y, MARIO_WIDTH, MARIO_HEIGHT);
 		xVelocity = 0;
 		yVelocity = 0;
 		onASurface = false;
 		gravity = 0.7;
 		friction = .85;
-		jumpStrength = 15;
+		jumpStrength = 15;*/
+		this.player = player;
 	}
 
 	// METHODS
-	public void walk(int dir) {
+	/*public void walk(int dir) {
 		if (xVelocity <= 10 && xVelocity >= -10)
 			xVelocity += dir;
 	}
@@ -122,7 +124,10 @@ public class Tile extends MovingImage {
 
 		moveToLocation(xCoord2,yCoord2);
 
-	}
+	}*/
 
+	public boolean getPlayer() {
+		return player;
+	}
 
 }
