@@ -7,9 +7,11 @@ public class MenuPanel extends JPanel implements ActionListener {
 	
 	Main w;
 	
+	private JButton instructionButton, settingsButton, playButton;
+	
 	public MenuPanel(Main w) {
 		this.w = w;
-		JButton instructionButton = new JButton("Instruction");
+		JButton instructionButton = new JButton("Instructions");
 		JButton settingsButton = new JButton("Settings");
 		JButton playButton = new JButton("Play Game");
 
@@ -23,7 +25,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		w.changePanel("instructions");
+		w.changePanel("game");
 	}
 	
 }
