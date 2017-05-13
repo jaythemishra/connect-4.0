@@ -92,6 +92,51 @@ public class GamePanel extends JPanel implements Runnable
 	  }
   }
   
+  public boolean winner() {
+	  for(int row = 0; row < tiles.length; row++) {
+		  for(int col = 0; col < tiles[0].length; col++) {
+			  //int numInARow = 1;
+			  if(tiles[row][col] != null) {
+				  boolean player = tiles[row][col].getPlayer();
+				  try{
+					  if(tiles[row - 1][col].getPlayer() == player && tiles[row + 1][col].getPlayer() == player && tiles[row + 2][col].getPlayer() == player) {
+						  System.out.println("The winner is Player " + player);
+						  return player;
+					  }
+				  } catch(ArrayIndexOutOfBoundsException e) {
+			
+				  } catch(NullPointerException e){}
+				  try{
+					  if(tiles[row][col - 1].getPlayer() == player && tiles[row][col + 1].getPlayer() == player && tiles[row][col + 2].getPlayer() == player) {
+						  System.out.println("The winner is Player " + player);
+						  return player;
+					  }
+				  } catch(ArrayIndexOutOfBoundsException e) {
+					  
+				  }	catch(NullPointerException e){}
+
+				  try{
+					  if(tiles[row - 1][col - 1].getPlayer() == player && tiles[row + 1][col + 1].getPlayer() == player && tiles[row + 2][col + 2].getPlayer() == player) {
+						  System.out.println("The winner is Player " + player);
+						  return player;
+					  }
+				  } catch(ArrayIndexOutOfBoundsException e) {
+					  
+				  } catch(NullPointerException e){}
+				  try{
+					  if(tiles[row - 1][col + 1].getPlayer() == player && tiles[row + 1][col - 1].getPlayer() == player && tiles[row + 2][col - 2].getPlayer() == player) {
+						  System.out.println("The winner is Player " + player);
+						  return player;
+					  }
+				  } catch(ArrayIndexOutOfBoundsException e) {
+					  
+				  } catch(NullPointerException e){}
+			  }
+		  }
+	  }
+	  return false;
+  }
+  
   
   public KeyHandler getKeyHandler() {
 	  return keyControl;
@@ -162,24 +207,31 @@ public class GamePanel extends JPanel implements Runnable
 			  keys.remove(code);
 		  if(e.getKeyCode() == KeyEvent.VK_1) {
 			  addTile(1);
+			  winner();
 		  }
 		  if(e.getKeyCode() == KeyEvent.VK_2) {
 			  addTile(2);
+			  winner();
 		  }
 		  if(e.getKeyCode() == KeyEvent.VK_3) {
 			  addTile(3);
+			  winner();
 		  }
 		  if(e.getKeyCode() == KeyEvent.VK_4) {
 			  addTile(4);
+			  winner();
 		  }
 		  if(e.getKeyCode() == KeyEvent.VK_5) {
 			  addTile(5);
+			  winner();
 		  }
 		  if(e.getKeyCode() == KeyEvent.VK_6) {
 			  addTile(6);
+			  winner();
 		  }
 		  if(e.getKeyCode() == KeyEvent.VK_7) {
 			  addTile(7);
+			  winner();
 		  }
 	  }
 
