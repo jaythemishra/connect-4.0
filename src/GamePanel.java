@@ -10,12 +10,16 @@ import java.util.*;
 public class GamePanel extends JPanel implements Runnable
 {
   public static final int DRAWING_WIDTH = 800;
-  public static final int DRAWING_HEIGHT = 600;
+  public static final int DRAWING_HEIGHT = 800;
   
+  private static final int RECT_HEIGHT = (DRAWING_HEIGHT - 100) / 7;
+  private static final int RECT_WIDTH = (DRAWING_WIDTH - 100) / 7;
+
   private Rectangle screenRect;
 	
   private Mario mario;
-  private ArrayList<Shape> obstacles;
+  private Rectangle[][] grid;
+
   
   private KeyHandler keyControl;
 
@@ -24,14 +28,14 @@ public class GamePanel extends JPanel implements Runnable
 	  super();
 	  
 	  keyControl = new KeyHandler();
-	  setBackground(Color.CYAN);
+	  setBackground(Color.YELLOW);
 	  screenRect = new Rectangle(0,0,DRAWING_WIDTH,DRAWING_HEIGHT);
-	  obstacles = new ArrayList<Shape>();
-	  obstacles.add(new Rectangle(200,400,400,50));
-	  obstacles.add(new Rectangle(0,250,100,50));
-	  obstacles.add(new Rectangle(700,250,100,50));
-	  obstacles.add(new Rectangle(375,300,50,100));
-	  obstacles.add(new Rectangle(300,250,200,50));
+	  grid = new Rectangle[7][7];
+	  for(int row = 0; row < grid.length; row++) {
+		  for(int col = 0; col < grid[0].length; col++) {
+			  grid[row][col] = new Rectangle(50 + row * RECT_WIDTH, 50 + col * RECT_HEIGHT, RECT_WIDTH, RECT_HEIGHT);
+		  }
+	  }
 	  spawnNewMario();
 	  new Thread(this).start();
   }
@@ -51,9 +55,11 @@ public class GamePanel extends JPanel implements Runnable
     AffineTransform at = g2.getTransform();
     g2.scale(ratioX, ratioY);
 
-    g.setColor(new Color(205,102,29));
-    for (Shape s : obstacles) {
-    	g2.fill(s);
+    g.setColor(Color.BLACK);
+    for (Rectangle[] row : grid) {
+    	for(Rectangle col : row) {
+    		g2.draw(col);
+    	}
     }
     mario.draw(g2,this);
     
@@ -83,10 +89,10 @@ public class GamePanel extends JPanel implements Runnable
 		if (keyControl.isPressed(KeyEvent.VK_UP))
 	  		mario.jump();
 	
-	  	mario.act(obstacles);
+	  	//mario.act(grid);
 	  	
-	  	if (!screenRect.intersects(mario))
-	  		spawnNewMario();
+	  	//if (!screenRect.intersects(mario))
+	  		//spawnNewMario();
 	  	
 	  	repaint();
 	  	
