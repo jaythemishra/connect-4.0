@@ -323,6 +323,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					if(grid[row][col].contains(p))
 					{
 						addTile(row+1);
+						winner();
 					}
 				}
 			}
