@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.util.*;
 
 
-public class GamePanel extends JPanel implements Runnable
+public class GamePanel extends JPanel implements Runnable, MouseMotionListener
 {
   public static final int DRAWING_WIDTH = 800;
   public static final int DRAWING_HEIGHT = 800;
@@ -20,6 +20,8 @@ public class GamePanel extends JPanel implements Runnable
   private Tile mario;
   private Tile[][] tiles;
   private Rectangle[][] grid;
+  private Color[][] colors;
+  
   private boolean currentPlayer;
   
   private KeyHandler keyControl;
@@ -34,11 +36,14 @@ public class GamePanel extends JPanel implements Runnable
 	  tiles = new Tile[7][7];
 	  //tiles[4][4] = new Tile(true);
 	  grid = new Rectangle[7][7];
+	  colors = new Color[7][7];
 	  for(int row = 0; row < grid.length; row++) {
 		  for(int col = 0; col < grid[0].length; col++) {
 			  grid[row][col] = new Rectangle(50 + row * RECT_WIDTH, 50 + col * RECT_HEIGHT, RECT_WIDTH, RECT_HEIGHT);
+			  colors[row][col]= Color.yellow;
 		  }
 	  }
+	  addMouseMotionListener(this);
 	  new Thread(this).start();
   }
 
@@ -61,7 +66,7 @@ public class GamePanel extends JPanel implements Runnable
     	for(int col = 0; col < grid[0].length; col++) {
     	   // g2.draw(col);
     		Rectangle r = grid[row][col];
-    	    g2.setColor(Color.YELLOW);
+    	    g2.setColor(colors[row][col]);
     		g2.fill(r);
     	    g2.setColor(Color.WHITE);
     	    if(tiles[row][col] != null) {
@@ -243,6 +248,34 @@ public class GamePanel extends JPanel implements Runnable
 		  return keys.contains(code);
 	  }
   }
+
+
+
+@Override
+public void mouseDragged(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void mouseMoved(MouseEvent arg0) {
+	for (int row = 0; row < grid.length; row++) {
+		for(int col = 0; col < grid[0].length; col++) {
+			if(grid[row][col].contains(getMousePosition()))
+			{
+			
+				for (int i = 0; i<grid.length; i++)
+				{
+					colors[row][i]=Color.gray;	
+				}
+				repaint();
+				break;
+			}
+		}
+	}
+	
+	
+}
 
 
 }
