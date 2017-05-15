@@ -6,6 +6,10 @@ public class Main extends JFrame {
 
 	JPanel cardPanel;
 	
+	/**
+	 * Creates a new Main object that runs the program.
+	 * @param title The title of the window
+	 */
 	public Main(String title) {
 		super(title);
 		setBounds(100, 100, 800, 800);
@@ -33,11 +37,19 @@ public class Main extends JFrame {
 	    setVisible(true);
 	}
 
+	/**
+	 * Starts the program by creating a new main object.
+	 * @param args The standard parameter for the main method.
+	 */
 	public static void main(String[] args)
 	{
 		Main w = new Main("Connect 4 Rotate");
 	}
   
+	/**
+	 * Switches the current panel that is showing on the screen.
+	 * @param name The name of the panel that should be switched to.
+	 */
 	public void changePanel(String name) {
 		((CardLayout)cardPanel.getLayout()).show(cardPanel,name);
 		requestFocus();

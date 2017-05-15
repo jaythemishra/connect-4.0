@@ -16,6 +16,10 @@ public class Tile /*extends MovingImage*/ {
 	private double gravity;
 	private double jumpStrength;*/
 
+	/**
+	 * Creates a new Tile object.
+	 * @param player The player that this Tile object belongs to (whether it is a red or black tile).
+	 */
 	public Tile(boolean player) {
 		/*super("mario.png", x, y, MARIO_WIDTH, MARIO_HEIGHT);
 		xVelocity = 0;
@@ -126,6 +130,10 @@ public class Tile /*extends MovingImage*/ {
 
 	}*/
 
+	/*
+	 * Returns the player that this Tile object belongs to.
+	 * @return player The player that this tiles belongs to.
+	 */
 	public boolean getPlayer() {
 		return player;
 	}

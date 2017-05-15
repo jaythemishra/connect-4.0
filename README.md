@@ -18,11 +18,11 @@ Instructions:
 
 	-Players click on the start button on the home screen after reading the instructions.
 
-	-When it is a player’s turn, they click the top of the column that they would like to drop their tile into.
+	-When it is a player’s turn, they click on the column that they would like to drop their tile into.
 
-	-Players may use the left arrow key to turn the board 90˚ to the left.
+	-Players may use the left arrow key to turn the board 90˚ to the left. (NOT DONE)
 
-	-Players may use the right arrow key to turn the board 90˚. Players may not drop a tile and rotate the board on the same turn.
+	-Players may use the right arrow key to turn the board 90˚. Players may not drop a tile and rotate the board on the same turn. (NOT DONE)
 
 	-The first player to get four in a row of their color wins.
 
@@ -34,39 +34,39 @@ Features:
 
 	Must-have
 
-		- Placing colored pieces: having a way for players to to place their piece on the board following the standard connect four rules
+		- Placing colored pieces: having a way for players to to place their piece on the board following the standard connect four rules (DONE)
 
-		- Rotation: Either rotate the board and tiles left or right by 90˚
+		- Rotation: Either rotate the board and tiles left or right by 90˚ (NOT DONE)
 
-		- Gravity: Once rotated the pieces don’t stick to their original side (instead they fall according the the rules of gravity). Pieces dropped on the board will also fall according to the rules of gravity
+		- Gravity: Once rotated the pieces don’t stick to their original side (instead they fall according the the rules of gravity). Pieces dropped on the board will also fall according to the rules of gravity (NOT DONE)
 
-		- GUI: Start Screen and end screen wich instructions, start, and menu buttons.
+		- GUI: Start Screen and end screen wich instructions, start, and menu buttons. (NOT DONE)
 
-		- Background music: background music necessary to hype up the players
+		- Background music: background music necessary to hype up the players (NOT DONE)
 
 	Want-to-have
 
-		- Special feature (delete row): deletes an entire row
+		- Special feature (delete row): deletes an entire row (NOT DONE)
 
-		- Special feature (delete column): deletes an entire column
+		- Special feature (delete column): deletes an entire column (NOT DONE)
 
-		- Special feature (BOMB): makes the next tiled place a BOMB that explodes and deletes the 8 surrounding tiles.
+		- Special feature (BOMB): makes the next tiled place a BOMB that explodes and deletes the 8 surrounding tiles. (DONE)
 
-		- Settings Menu: select which “Special features” you want to enable or disable
+		- Settings Menu: select which “Special features” you want to enable or disable (NOT DONE)
 
-		- Animations: animations of tiles falling once added to the board and exploding once deleted
+		- Animations: animations of tiles falling once added to the board and exploding once deleted (NOT DONE)
 
 	Stretch
 
-		- AI: Computer that plays against you and beats you every time
+		- AI: Computer that plays against you and beats you every time (NOT DONE)
 
-		- Nicknames: Instead of having player 1 and player 2 on the screen, have the intro screen prompt players to type in their name
+		- Nicknames: Instead of having player 1 and player 2 on the screen, have the intro screen prompt players to type in their name (NOT DONE)
 
-		- Online Multiplayer: Network playing that allows players to play against each other on separate computers
+		- Online Multiplayer: Network playing that allows players to play against each other on separate computers (NOT DONE)
 
-		- Expanded and Irregular Grids: Boards that are bigger than the standard 7X7 grid or shaped differently
+		- Expanded and Irregular Grids: Boards that are bigger than the standard 7X7 grid or shaped differently (NOT DONE)
 
-		- Different Rotations: Allowing the player to rotated by different angles, such as 45˚, 180˚, etc.
+		- Different Rotations: Allowing the player to rotated by different angles, such as 45˚, 180˚, etc. (NOT DONE)
 
 
 
@@ -74,30 +74,27 @@ Class list:
 
 
 
-	-Tile: the pieces that are dropped into the board
+	-Tile: the object that represents a piece that is dropped into the board
 
-	-Board: the game board
+	-GamePanel: Java panel  tha holds and runs the game
 
-	-MenuPanel: Java panel that hold the menu
+	-MenuPanel: Javapanel that hold the menu
 
 	-InstructionPanel: Java panel with all the instructions
+	
+	-SettingsPanel: Java panel that holds the game settings
+	
+	-Main: The class that holds the main method and runs the program
+	
+	-KeyHandler: A temporary class left over from the AnimationDemoAP that is currently being used to handle keyboard interactions but will probably be removed later.
 
-	-Game: runs the game
-
-
-
-
-	-GamePanel: Java panel that has the actual game itself
-	-Powerup (Interface) : Any action that changes the game from the standard Connect 4 game (i.e. Rotating the board, deleting rows/columns, bomb tiles, nukes, etc.)
-		-Rotation (rotates the board 90 degrees clockwise or counterclockwise).
-		-Delete (deletes a row or column from the board)
-		-Bomb (deletes the 8 tiles around the spot where it lands on the board)
+	
 
 Responsibility list:
 
 
 
-	-Jay: Menu panel, Instruction panel, Game (GUI)
+	-Jay: GamePanel, MenuPanel, InstructionPanel, Tile, SettingsPanel (Menu/GUI and some game logic)
 
-	-Ryan: Tile, Game (Game logic)
+	-Ryan: Tile, GamePanel (Game Logic and some GUI)
 

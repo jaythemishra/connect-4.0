@@ -13,6 +13,10 @@ public class MenuPanel extends JPanel implements ActionListener {
 	
 	//private JButton instructionButton, settingsButton, playButton;
 	
+	/**
+	 * Creates a new MenuPanel object with a Play button to play the game, a Settings Button to go to the game settings, and an Instructions button to view the game instructions.
+	 * @param w The Main object that this MenuPanel will be a part of.
+	 */
 	public MenuPanel(Main w) {
 		this.w = w;
 		JButton instructionButton = new JButton("Instructions");
@@ -28,6 +32,9 @@ public class MenuPanel extends JPanel implements ActionListener {
 		add(playButton);
 	}
 	
+	/**
+	 * The method that actually draws the menu.
+	 */
 	public void paintComponent(Graphics g)
 	  {
 	    super.paintComponent(g);  // Call JPanel's paintComponent method to paint the background
@@ -49,6 +56,9 @@ public class MenuPanel extends JPanel implements ActionListener {
 		// TODO Add any custom drawings here
 	  }
 	
+	/**
+	 * Changes the panel to the game.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		w.changePanel("game");
 	}

@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 
 	private Rectangle screenRect;
 
-	private Tile mario;
+	//private Tile mario;
 	private Tile[][] tiles;
 	private Rectangle[][] grid;
 	private Color[][] colors;
@@ -26,7 +26,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 
 	private KeyHandler keyControl;
 
-
+	/**
+	 * Creates a new GamePanel object that initializes the 2D array that will hold all the game tiles and another 2D array to hold the rectangles that get drawn on the screen.
+	 */
 	public GamePanel () {
 		super();
 		currentPlayer = true;
@@ -48,6 +50,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		new Thread(this).start();
 	}
 
+	/**
+	 * The method that actually draws the game board and all the tiles on it, determining if the tiles should be red or black.
+	 * @param g The Graphics object that allows the method to draw things on the screen.
+	 */
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);  // Call JPanel's paintComponent method to paint the background
@@ -88,6 +94,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		// TODO Add any custom drawings here
 	}
 
+	/**
+	 * Adds a new tile to the first open spot in the specified column, updating the 2D array that holds all the tiles.
+	 * @param col The column that the tile should be added to.
+	 */
 	public void addTile(int col) {
 		for(int row = tiles.length - 1; row > -1; row--) {
 			if(tiles[col-1][row] == null) {
@@ -98,6 +108,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		}
 	}
 	
+	/**
+	 * Returns whether the current player is Player 1 or Player 2.
+	 * @return The corresponding number to the current player.
+	 */
 	public int playerInt() {
 		if(currentPlayer)
 			return 1;
@@ -105,6 +119,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			return 2;
 	}
 
+	/**
+	 * Determines if either player has won the game, and if they have, it creates a pop-up window that tells the players who has won.
+	 * @return The player who has won.
+	 */
 	public boolean winner() {
 		for(int row = 0; row < tiles.length; row++) {
 			for(int col = 0; col < tiles[0].length; col++) {
@@ -155,11 +173,17 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	}
 
 
+	/**
+	 * Gets the keyControl field..
+	 * @return The keyControl field.
+	 */
 	public KeyHandler getKeyHandler() {
 		return keyControl;
 	}
 
-
+	/**
+	 * 
+	 */
 	public void run() {
 		while (true) { // Modify this to allow quitting
 			long startTime = System.currentTimeMillis();
