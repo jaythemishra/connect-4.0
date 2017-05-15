@@ -314,8 +314,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	}
 
 
-
-	@Override
+	/**
+	 * Method from the MouseListener interface.
+	 */
 	public void mouseDragged(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
@@ -410,7 +411,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 
 	}
 
-	@Override
+	/**
+	 * Method from the MouseListener interface.
+	 */
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
