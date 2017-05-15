@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.util.*;
 
 
-public class GamePanel extends JPanel implements Runnable, MouseMotionListener
+public class GamePanel extends JPanel implements Runnable, MouseMotionListener, MouseListener
 {
 	public static final int DRAWING_WIDTH = 800;
 	public static final int DRAWING_HEIGHT = 800;
@@ -44,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener
 			}
 		}
 		addMouseMotionListener(this);
+		addMouseListener(this);
 		new Thread(this).start();
 	}
 
@@ -266,11 +267,15 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener
 				{
 					if(grid[row][col].contains(getMousePosition()))
 					{
-						System.out.println(getMousePosition());
+						//System.out.println(getMousePosition());
+
+						// chnages the current select colum to GRAY
 						for (int i = 0; i<grid.length; i++)
 						{
 							colors[row][i]=Color.gray;	
 						}
+
+						// Resets all other Colums back to YELLOW
 						for(int k = 0; k<7; k++)
 						{
 							if(k!=row)
@@ -288,5 +293,51 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener
 				}
 			}
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		Point p = getMousePosition();
+		if(p!=null)
+		{
+			for (int row = 0; row < grid.length; row++) {
+				for(int col = 0; col < grid[0].length; col++) {
+					if(grid[row][col].contains(p))
+					{
+						addTile(row+1);
+					}
+				}
+			}
+		}
+
+
+
+
+
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
 	}
 }
