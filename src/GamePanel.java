@@ -109,6 +109,16 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	}
 	
 	/**
+	 * Deletes all the tiles in a specified column.
+	 * @param col The column from which all the tiles shall be deleted.
+	 */
+	public void deleteColumn(int col) {
+		for(int i = 0; i < 7; i++) {
+			tiles[col][i] = null;
+		}
+	}
+	
+	/**
 	 * Returns whether the current player is Player 1 or Player 2.
 	 * @return The corresponding number to the current player.
 	 */
@@ -182,7 +192,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	}
 
 	/**
-	 * 
+	 * Runs the animations.
 	 */
 	public void run() {
 		while (true) { // Modify this to allow quitting
@@ -234,52 +244,70 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 
 		private ArrayList<Integer> keys;
 
+		/**
+		 * Creates a new KeyHandler object and initializes the keys field.
+		 */
 		public KeyHandler() {
 			keys = new ArrayList<Integer>();
 		}
 
+		/**
+		 * Method from the KeyListener interface.
+		 */
 		public void keyPressed(KeyEvent e) {
 			keys.add(e.getKeyCode());
 		}
-
+		
+		/**
+		 * Method from the KeyListener interface that enables players to delete columns from the board.
+		 */
 		public void keyReleased(KeyEvent e) {
 			Integer code = e.getKeyCode();
 			while(keys.contains(code))
 				keys.remove(code);
 			if(e.getKeyCode() == KeyEvent.VK_1) {
-				addTile(1);
+				deleteColumn(0);
 				winner();
 			}
 			if(e.getKeyCode() == KeyEvent.VK_2) {
-				addTile(2);
+				deleteColumn(1);
 				winner();
 			}
 			if(e.getKeyCode() == KeyEvent.VK_3) {
-				addTile(3);
+				deleteColumn(2);
 				winner();
 			}
 			if(e.getKeyCode() == KeyEvent.VK_4) {
-				addTile(4);
+				deleteColumn(3);
 				winner();
 			}
 			if(e.getKeyCode() == KeyEvent.VK_5) {
-				addTile(5);
+				deleteColumn(4);
 				winner();
 			}
 			if(e.getKeyCode() == KeyEvent.VK_6) {
-				addTile(6);
+				deleteColumn(5);
 				winner();
 			}
 			if(e.getKeyCode() == KeyEvent.VK_7) {
-				addTile(7);
+				deleteColumn(6);
 				winner();
 			}
+			
 		}
-
+		
+		/**
+		 * Method from the KeyListener interface.
+		 */
 		public void keyTyped(KeyEvent e) {
 
 		}
-
+			
+		/**
+		 * Returns true if a key is pressed.
+		 * @param code the code of the key that is being checked.
+		 * @return true if the specified key is pressed, false otherwise.
+		 */
 		public boolean isPressed(int code) {
 			return keys.contains(code);
 		}
@@ -330,24 +358,35 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		}
 	}
 
+	/**
+	 * Method from the MouseListener interface.
+	 */
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 
-
 	}
 
+	/**
+	 * Method from the MouseListener interface.
+	 */
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Method from the MouseListener interface.
+	 */
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Method from the MouseListener interface that allows players to add tiles to the board.
+	 */
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		Point p = getMousePosition();
