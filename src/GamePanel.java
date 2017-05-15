@@ -97,6 +97,13 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			}
 		}
 	}
+	
+	public int playerInt() {
+		if(currentPlayer)
+			return 1;
+		else
+			return 2;
+	}
 
 	public boolean winner() {
 		for(int row = 0; row < tiles.length; row++) {
@@ -107,6 +114,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					try{
 						if(tiles[row - 1][col].getPlayer() == player && tiles[row + 1][col].getPlayer() == player && tiles[row + 2][col].getPlayer() == player) {
 							System.out.println("The winner is Player " + player);
+							JOptionPane.showMessageDialog(this, "Game Over! Player " + playerInt() + " wins!");
 							return player;
 						}
 					} catch(ArrayIndexOutOfBoundsException e) {
@@ -115,6 +123,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					try{
 						if(tiles[row][col - 1].getPlayer() == player && tiles[row][col + 1].getPlayer() == player && tiles[row][col + 2].getPlayer() == player) {
 							System.out.println("The winner is Player " + player);
+							JOptionPane.showMessageDialog(this, "Game Over! Player " + playerInt() + " wins!");
 							return player;
 						}
 					} catch(ArrayIndexOutOfBoundsException e) {
@@ -124,6 +133,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					try{
 						if(tiles[row - 1][col - 1].getPlayer() == player && tiles[row + 1][col + 1].getPlayer() == player && tiles[row + 2][col + 2].getPlayer() == player) {
 							System.out.println("The winner is Player " + player);
+							JOptionPane.showMessageDialog(this, "Game Over! Player " + playerInt() + " wins!");
 							return player;
 						}
 					} catch(ArrayIndexOutOfBoundsException e) {
@@ -132,6 +142,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					try{
 						if(tiles[row - 1][col + 1].getPlayer() == player && tiles[row + 1][col - 1].getPlayer() == player && tiles[row + 2][col - 2].getPlayer() == player) {
 							System.out.println("The winner is Player " + player);
+							JOptionPane.showMessageDialog(this, "Game Over! Player " + playerInt() + " wins!");
 							return player;
 						}
 					} catch(ArrayIndexOutOfBoundsException e) {
