@@ -297,6 +297,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 				turnRight();
 
 			}
+			if(e.getKeyCode() == KeyEvent.VK_9) {
+				turnLeft();
+
+			}
 
 		}
 
@@ -455,10 +459,15 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		repaint();
 
 
-
-
-
-
-
+	}
+	
+	/**
+	 * Rotates the board to the Left 90 degrees 
+	 */
+	public void turnLeft()
+	{
+		turnRight();
+		turnRight();
+		turnRight();
 	}
 }
