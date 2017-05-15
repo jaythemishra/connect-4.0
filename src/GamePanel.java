@@ -107,7 +107,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			}
 		}
 	}
-	
+
 	/**
 	 * Deletes all the tiles in a specified column.
 	 * @param col The column from which all the tiles shall be deleted.
@@ -117,7 +117,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			tiles[col][i] = null;
 		}
 	}
-	
+
 	/**
 	 * Returns whether the current player is Player 1 or Player 2.
 	 * @return The corresponding number to the current player.
@@ -257,7 +257,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		public void keyPressed(KeyEvent e) {
 			keys.add(e.getKeyCode());
 		}
-		
+
 		/**
 		 * Method from the KeyListener interface that enables players to delete columns from the board.
 		 */
@@ -293,16 +293,20 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 				deleteColumn(6);
 				winner();
 			}
-			
+			if(e.getKeyCode() == KeyEvent.VK_8) {
+				turnRight();
+
+			}
+
 		}
-		
+
 		/**
 		 * Method from the KeyListener interface.
 		 */
 		public void keyTyped(KeyEvent e) {
 
 		}
-			
+
 		/**
 		 * Returns true if a key is pressed.
 		 * @param code the code of the key that is being checked.
@@ -416,6 +420,45 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	 */
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+
+	}
+
+/**
+ * Rotates the board to the right 90 degrees 
+ */
+	public void turnRight()
+	{
+		Tile[][] temp= new Tile[7][7];
+
+		for(int row = 6; row>=0; row--)
+		{
+			Tile[] hold= new Tile[7];
+			for(int i = 0; i< 7; i++)
+			{
+				//System.out.println(tiles[i][row]);
+				hold[i]= tiles[i][row];
+			}
+			
+			for(int j =0; j<tiles[0].length; j++)
+			{
+						System.out.println(tiles[0][j]);
+			}
+			
+			temp[6-row]=hold;
+	
+			
+			//System.out.println("next row up");
+
+		}
+		
+		tiles=temp;
+		repaint();
+
+
+
+
+
+
 
 	}
 }

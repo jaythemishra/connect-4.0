@@ -137,5 +137,18 @@ public class Tile /*extends MovingImage*/ {
 	public boolean getPlayer() {
 		return player;
 	}
+	
+	public String toString()
+	{
+		String result= "";
+		if(player)
+		{
+			result = "Player 2 and Balck";
+		}
+		else
+			result = "Player 1 and Red";
+		return result;
+				
+	}
 
 }
