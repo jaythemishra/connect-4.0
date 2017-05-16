@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 
 import javax.swing.*;
+import javax.swing.Timer;
 
 import java.util.*;
 
@@ -69,6 +70,12 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		AffineTransform at = g2.getTransform();
 		g2.scale(ratioX, ratioY);
 
+		if(!currentPlayer) {
+			g2.drawString("Red Player's Turn", 350, 50);
+		} else {
+			g2.drawString("Black Player's Turn", 350, 50);
+		}
+
 		for (int row = 0; row < grid.length; row++) {
 			for(int col = 0; col < grid[0].length; col++) {
 				// g2.draw(col);
@@ -77,7 +84,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 				g2.fill(r);
 				g2.setColor(Color.WHITE);
 				if(tiles[row][col] != null) {
-					if(tiles[row][col].getPlayer() == true)
+					if(tiles[row][col].getPlayer())
 						g2.setColor(Color.RED);
 					else
 						g2.setColor(Color.BLACK);
@@ -88,8 +95,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			}
 		}
 		//mario.draw(g2,this);
-
-		g2.setTransform(at);
+		
 
 		// TODO Add any custom drawings here
 	}
@@ -107,7 +113,43 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			}
 		}
 	}
+	
+	public void gravity() {
+		/*int delay = 1000; //milliseconds
+		ActionListener taskPerformer = new ActionListener() {
+		      public void actionPerformed(ActionEvent evt) {*/
+		     
+		for(int x = 0; x < tiles.length; x++) {
+			for(int y = tiles[0].length - 2; y >= 0; y--) {
+				if(tiles[x][y + 1] == null && tiles[x][y] != null) {
+					tiles[x][y + 1] = tiles[x][y];
+					tiles[x][y] = null;
+					if(y < tiles[0].length - 2)
+						y += 2;
+				}
+			}
+		}
+		winner();
+		      /*}
+		};
+		Timer t = new Timer(delay, taskPerformer);
+		t.start();*/
+		//t.stop();
+	}
 
+	/**
+	 * Deletes all the tiles in a specified column.
+	 * @param col The column from which all the tiles shall be deleted.
+	 */
+	public void deleteRow(int row) {
+		for(int i = 0; i < 7; i++) {
+			tiles[i][row] = null;
+		}
+		currentPlayer = !currentPlayer;
+		gravity();
+		winner();
+	}
+	
 	/**
 	 * Deletes all the tiles in a specified column.
 	 * @param col The column from which all the tiles shall be deleted.
@@ -116,6 +158,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		for(int i = 0; i < 7; i++) {
 			tiles[col][i] = null;
 		}
+		currentPlayer = !currentPlayer;
+		winner();
 	}
 
 	/**
@@ -266,39 +310,77 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			while(keys.contains(code))
 				keys.remove(code);
 			if(e.getKeyCode() == KeyEvent.VK_1) {
-				deleteColumn(0);
-				winner();
+				if(e.isShiftDown()) {
+					deleteRow(0);
+				}
+				else {
+					deleteColumn(0);
+				}
 			}
 			if(e.getKeyCode() == KeyEvent.VK_2) {
-				deleteColumn(1);
-				winner();
+				if(e.isShiftDown()) {
+					deleteRow(1);
+				}
+				else {
+					deleteColumn(1);
+				}
 			}
 			if(e.getKeyCode() == KeyEvent.VK_3) {
-				deleteColumn(2);
-				winner();
+				if(e.isShiftDown()) {
+					deleteRow(2);
+				}
+				else {
+					deleteColumn(2);
+				}
 			}
 			if(e.getKeyCode() == KeyEvent.VK_4) {
-				deleteColumn(3);
-				winner();
+				if(e.isShiftDown()) {
+					deleteRow(3);
+				}
+				else {
+					deleteColumn(3);
+				}
 			}
 			if(e.getKeyCode() == KeyEvent.VK_5) {
-				deleteColumn(4);
-				winner();
+				if(e.isShiftDown()) {
+					deleteRow(4);
+				}
+				else {
+					deleteColumn(4);
+				}
 			}
 			if(e.getKeyCode() == KeyEvent.VK_6) {
-				deleteColumn(5);
-				winner();
+				if(e.isShiftDown()) {
+					deleteRow(5);
+				}
+				else {
+					deleteColumn(5);
+				}
 			}
 			if(e.getKeyCode() == KeyEvent.VK_7) {
-				deleteColumn(6);
-				winner();
+				if(e.isShiftDown()) {
+					deleteRow(6);
+				}
+				else {
+					deleteColumn(6);
+				}
 			}
-			if(e.getKeyCode() == KeyEvent.VK_8) {
+			
+			
+			if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+				//Timer t = new Timer();
 				turnRight();
+				gravity();
 
 			}
-			if(e.getKeyCode() == KeyEvent.VK_9) {
+			if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				turnLeft();
+				gravity();
+
+
+			}
+			if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+				gravity();
 
 			}
 

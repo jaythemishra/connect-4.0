@@ -11,7 +11,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 	public static final int DRAWING_WIDTH = 800;
 	public static final int DRAWING_HEIGHT = 800;
 	
-	//private JButton instructionButton, settingsButton, playButton;
+	private JButton instructionButton, settingsButton, playButton;
 	
 	/**
 	 * Creates a new MenuPanel object with a Play button to play the game, a Settings Button to go to the game settings, and an Instructions button to view the game instructions.
@@ -19,9 +19,9 @@ public class MenuPanel extends JPanel implements ActionListener {
 	 */
 	public MenuPanel(Main w) {
 		this.w = w;
-		JButton instructionButton = new JButton("Instructions");
-		JButton settingsButton = new JButton("Settings");
-		JButton playButton = new JButton("Play Game");
+		instructionButton = new JButton("Instructions");
+		settingsButton = new JButton("Settings");
+		playButton = new JButton("Play Game");
 
 
 		//instructionButton.addActionListener(this);
@@ -30,6 +30,10 @@ public class MenuPanel extends JPanel implements ActionListener {
 		//add(settingsButton);
 		playButton.addActionListener(this);
 		add(playButton);
+		instructionButton.addActionListener(this);
+		add(instructionButton);
+		settingsButton.addActionListener(this);
+		add(settingsButton);
 	}
 	
 	/**
@@ -60,7 +64,14 @@ public class MenuPanel extends JPanel implements ActionListener {
 	 * Changes the panel to the game.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		w.changePanel("game");
+		Object o = e.getSource();
+		if (o.equals(playButton)) {
+			w.changePanel("game");
+		} else if(o.equals(instructionButton)) {
+			w.changePanel("instructions");
+		} else if(o.equals(settingsButton)) {
+			w.changePanel("settings");
+		}
 	}
 	
 }

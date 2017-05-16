@@ -13,7 +13,7 @@ public class InstructionPanel extends JPanel implements ActionListener {
 	 */
 	public InstructionPanel(Main w) {
 		this.w = w;
-		JButton backButton = new JButton("Back to Menu");
+		JButton backButton = new JButton("Back to Menu (THIS IS INSTRUCTIONS)");
 		//JButton rightButton = new JButton("Rotate 90� counterclockwise");
 		//JButton bombButton = new JButton("Activate bomb");
 

@@ -1,6 +1,6 @@
-Rotate 4 README:
+Connect 4.0 README:
 
-	By Jay Mishra and Ryan Xia, 5/6/17
+	By Jay Mishra and Ryan Xia, 5/16/17
 
 
 
@@ -8,7 +8,7 @@ Description:
 
 
 
-	This is a variation of the classic game Connect 4. The objective is the same as the original game (players try to get four tiles in a row of their color), but with some added twists. Each turn, players can choose to either place a tile on the rack or rotate the rack 90˚ to the right or left. Tiles stack on top of each other, but change direction when the board is rotated. Additional powers include the ability to delete entire rows or columns after certain numbers of turns. These added features make the ultimate goal of getting four in a row more challenging and fun!
+	This is a variation of the classic game Connect 4. The objective is the same as the original game (players try to get four tiles in a row of their color), but with some added twists. Each turn, players can choose to either place a tile on the rack or shift the tiles to the right or left of the board. Tiles stack on top of each other. Additional powers include the ability to delete entire rows or columns after certain numbers of turns. These added features make the ultimate goal of getting four in a row more challenging and fun!
 
 
 
@@ -48,7 +48,7 @@ Features:
 
 		- Special feature (delete row): deletes an entire row (NOT DONE)
 
-		- Special feature (delete column): deletes an entire column (NOT DONE)
+		- Special feature (delete column): deletes an entire column (DONE)
 
 		- Special feature (BOMB): makes the next tiled place a BOMB that explodes and deletes the 8 surrounding tiles. (DONE)
 
@@ -94,7 +94,7 @@ Responsibility list:
 
 
 
-	-Jay: GamePanel, MenuPanel, InstructionPanel, Tile, SettingsPanel (Menu/GUI and some game logic)
+	-Jay: Has set up the basic structure of the program (all the Java panels and Main class), coded the graphical component of the game and wrote the winner method that checks if either player has won the game. Added a feature that allows players to delete columns of tiles using the keyboard.
 
-	-Ryan: Tile, GamePanel (Game Logic and some GUI)
+	-Ryan: Tile, Improved the graphical portion of the game by adding a feature that allows players to add tiles using the mouse instead of forcing them to use the keyboard. Made it so that columns become highlighted in gray when a player mouses over them. Added a rough version of a feature that allows players to move tiles to different sides of the board.
 

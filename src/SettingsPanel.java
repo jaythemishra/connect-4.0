@@ -13,7 +13,7 @@ public class SettingsPanel extends JPanel implements ActionListener {
 	 */
 	public SettingsPanel(Main w) {
 		this.w = w;
-		JButton backButton = new JButton("Back to Menu (This is Settings)");
+		JButton backButton = new JButton("Back to Menu (THIS IS SETTINGS SCREEN)");
 		//JButton rightButton = new JButton("Rotate 90� counterclockwise");
 		//JButton bombButton = new JButton("Activate bomb");
 

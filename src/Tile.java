@@ -10,19 +10,19 @@ public class Tile /*extends MovingImage*/ {
 	public static final int MARIO_HEIGHT = 90;
 
 	private boolean player;
-	/*private double xVelocity, yVelocity;
+	private double xVelocity, yVelocity;
 	private boolean onASurface;
 	private double friction;
 	private double gravity;
-	private double jumpStrength;*/
+	private double jumpStrength;
 
 	/**
 	 * Creates a new Tile object.
 	 * @param player The player that this Tile object belongs to (whether it is a red or black tile).
 	 */
 	public Tile(boolean player) {
-		/*super("mario.png", x, y, MARIO_WIDTH, MARIO_HEIGHT);
-		xVelocity = 0;
+		//super("mario.png", x, y, MARIO_WIDTH, MARIO_HEIGHT);
+		/*xVelocity = 0;
 		yVelocity = 0;
 		onASurface = false;
 		gravity = 0.7;
@@ -143,7 +143,7 @@ public class Tile /*extends MovingImage*/ {
 		String result= "";
 		if(player)
 		{
-			result = "Player 2 and Balck";
+			result = "Player 2 and Black";
 		}
 		else
 			result = "Player 1 and Red";

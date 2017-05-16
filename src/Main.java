@@ -43,7 +43,7 @@ public class Main extends JFrame {
 	 */
 	public static void main(String[] args)
 	{
-		Main w = new Main("Connect 4 Rotate");
+		Main w = new Main("Connect 4.0");
 	}
   
 	/**
