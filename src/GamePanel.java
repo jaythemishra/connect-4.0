@@ -185,7 +185,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					boolean player = tiles[row][col].getPlayer();
 					try{
 						if(tiles[row - 1][col].getPlayer() == player && tiles[row + 1][col].getPlayer() == player && tiles[row + 2][col].getPlayer() == player) {
-							System.out.println("The winner is Player " + player);
+							//System.out.println("The winner is Player " + player);
 							JOptionPane.showMessageDialog(this, "Game Over! Player " + playerInt() + " wins!");
 							return player;
 						}
@@ -194,7 +194,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					} catch(NullPointerException e){}
 					try{
 						if(tiles[row][col - 1].getPlayer() == player && tiles[row][col + 1].getPlayer() == player && tiles[row][col + 2].getPlayer() == player) {
-							System.out.println("The winner is Player " + player);
+							//System.out.println("The winner is Player " + player);
 							JOptionPane.showMessageDialog(this, "Game Over! Player " + playerInt() + " wins!");
 							return player;
 						}
@@ -204,7 +204,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 
 					try{
 						if(tiles[row - 1][col - 1].getPlayer() == player && tiles[row + 1][col + 1].getPlayer() == player && tiles[row + 2][col + 2].getPlayer() == player) {
-							System.out.println("The winner is Player " + player);
+							//System.out.println("The winner is Player " + player);
 							JOptionPane.showMessageDialog(this, "Game Over! Player " + playerInt() + " wins!");
 							return player;
 						}
@@ -213,7 +213,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					} catch(NullPointerException e){}
 					try{
 						if(tiles[row - 1][col + 1].getPlayer() == player && tiles[row + 1][col - 1].getPlayer() == player && tiles[row + 2][col - 2].getPlayer() == player) {
-							System.out.println("The winner is Player " + player);
+							//System.out.println("The winner is Player " + player);
 							JOptionPane.showMessageDialog(this, "Game Over! Player " + playerInt() + " wins!");
 							return player;
 						}
