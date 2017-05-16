@@ -22,6 +22,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	private Tile[][] tiles;
 	private Rectangle[][] grid;
 	private Color[][] colors;
+	private Color[][] copyOfColors;
 
 	private boolean currentPlayer;
 
@@ -40,10 +41,12 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		//tiles[4][4] = new Tile(true);
 		grid = new Rectangle[7][7];
 		colors = new Color[7][7];
+		copyOfColors = new Color[7][7];
 		for(int row = 0; row < grid.length; row++) {
 			for(int col = 0; col < grid[0].length; col++) {
 				grid[row][col] = new Rectangle(50 + row * RECT_WIDTH, 50 + col * RECT_HEIGHT, RECT_WIDTH, RECT_HEIGHT);
 				colors[row][col]= Color.yellow;
+				copyOfColors[row][col]=Color.YELLOW;
 			}
 		}
 		addMouseMotionListener(this);
@@ -146,11 +149,19 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	public void deleteRow(int row) {
 		for(int i = 0; i < 7; i++) {
 			tiles[i][row] = null;
+			colors[i][row]=Color.BLUE;
 		}
+	
+		killBlueBar(30,row);
+		repaint();
 		currentPlayer = !currentPlayer;
-		gravity();
+		stallGravityFor(30);
 		winner();
 	}
+	
+	
+	
+	
 
 	/**
 	 * Deletes all the tiles in a specified column.
@@ -242,9 +253,25 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	{
 		oneSecond =time;
 	}
+	public void killBlueBar(int time, int row)
+	{
+		blueBarTime=time;
+		blueRow=row;
+	}
+	public void resetRowToOrig(int row)
+	{
+		for(int i = 0; i < 7; i++) {
+			
+			colors[i][row]=copyOfColors[i][row];
+			
+		}
+		repaint();
+	}
 
 
 	int oneSecond=60;
+	int blueBarTime=30;
+	int blueRow=0;
 	/**
 	 * Runs the animations.
 	 */
@@ -290,6 +317,16 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			{
 				oneSecond--;
 				gravity();
+			}
+			
+			if(blueBarTime>0)
+			{
+				blueBarTime--;
+			}
+			else if(blueBarTime==0)
+			{
+				blueBarTime--;
+				resetRowToOrig(blueRow);
 			}
 			repaint();
 
@@ -453,7 +490,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 						// chnages the current select colum to GRAY
 						for (int i = 0; i<grid.length; i++)
 						{
-							colors[row][i]=Color.gray;	
+							colors[row][i]=Color.gray;
+							copyOfColors[row][i]=Color.gray;
 						}
 
 						// Resets all other Colums back to YELLOW
@@ -464,6 +502,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 								for(int j=0; j<7; j++)
 								{
 									colors[k][j]=Color.yellow;
+									copyOfColors[k][j]=Color.yellow;
 								}
 							}
 
@@ -520,12 +559,6 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 				}
 			}
 		}
-
-
-
-
-
-
 	}
 
 	/**
@@ -546,24 +579,12 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		for(int row = 6; row>=0; row--)
 		{
 			Tile[] hold= new Tile[7];
+			
 			for(int i = 0; i< 7; i++)
-			{
-				//System.out.println(tiles[i][row]);
 				hold[i]= tiles[i][row];
-			}
-
-			for(int j =0; j<tiles[0].length; j++)
-			{
-				System.out.println(tiles[0][j]);
-			}
 
 			temp[6-row]=hold;
-
-
-			//System.out.println("next row up");
-
 		}
-
 		tiles=temp;
 		repaint();
 
