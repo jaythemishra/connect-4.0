@@ -95,7 +95,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			}
 		}
 		//mario.draw(g2,this);
-		
+
 
 		// TODO Add any custom drawings here
 	}
@@ -113,24 +113,26 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			}
 		}
 	}
-	
+
 	public void gravity() {
 		/*int delay = 1000; //milliseconds
 		ActionListener taskPerformer = new ActionListener() {
 		      public void actionPerformed(ActionEvent evt) {*/
-		     
+
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = tiles[0].length - 2; y >= 0; y--) {
 				if(tiles[x][y + 1] == null && tiles[x][y] != null) {
 					tiles[x][y + 1] = tiles[x][y];
 					tiles[x][y] = null;
+					repaint();
 					if(y < tiles[0].length - 2)
 						y += 2;
 				}
+
 			}
 		}
 		winner();
-		      /*}
+		/*}
 		};
 		Timer t = new Timer(delay, taskPerformer);
 		t.start();*/
@@ -149,7 +151,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		gravity();
 		winner();
 	}
-	
+
 	/**
 	 * Deletes all the tiles in a specified column.
 	 * @param col The column from which all the tiles shall be deleted.
@@ -235,6 +237,14 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		return keyControl;
 	}
 
+
+	public void stallGravityFor(int time)
+	{
+		oneSecond =time;
+	}
+
+
+	int oneSecond=60;
 	/**
 	 * Runs the animations.
 	 */
@@ -270,6 +280,17 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			//if (!screenRect.intersects(mario))
 			//spawnNewMario();
 
+
+
+			if(oneSecond>0)
+			{
+				oneSecond--;
+			}
+			else if(oneSecond==0)
+			{
+				oneSecond--;
+				gravity();
+			}
 			repaint();
 
 			long waitTime = 17 - (System.currentTimeMillis()-startTime);
@@ -365,17 +386,21 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					deleteColumn(6);
 				}
 			}
-			
-			
+
+
 			if(e.getKeyCode() == KeyEvent.VK_LEFT) {
 				//Timer t = new Timer();
 				turnRight();
-				gravity();
+
+				stallGravityFor(30);
+				
 
 			}
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				turnLeft();
-				gravity();
+				stallGravityFor(30);
+				
+				
 
 
 			}
@@ -411,6 +436,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		// TODO Auto-generated method stub
 
 	}
+
+
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
@@ -509,9 +536,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 
 	}
 
-/**
- * Rotates the board to the right 90 degrees 
- */
+	/**
+	 * Rotates the board to the right 90 degrees 
+	 */
 	public void turnRight()
 	{
 		Tile[][] temp= new Tile[7][7];
@@ -524,25 +551,25 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 				//System.out.println(tiles[i][row]);
 				hold[i]= tiles[i][row];
 			}
-			
+
 			for(int j =0; j<tiles[0].length; j++)
 			{
-						System.out.println(tiles[0][j]);
+				System.out.println(tiles[0][j]);
 			}
-			
+
 			temp[6-row]=hold;
-	
-			
+
+
 			//System.out.println("next row up");
 
 		}
-		
+
 		tiles=temp;
 		repaint();
 
 
 	}
-	
+
 	/**
 	 * Rotates the board to the Left 90 degrees 
 	 */
@@ -552,4 +579,6 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		turnRight();
 		turnRight();
 	}
+
+	
 }
