@@ -8,7 +8,7 @@ import javax.swing.Timer;
 import java.util.*;
 
 
-public class GamePanel extends JPanel implements Runnable, MouseMotionListener, MouseListener
+public class GamePanel extends JPanel implements Runnable, MouseMotionListener, MouseListener, ActionListener
 {
 	public static final int DRAWING_WIDTH = 800;
 	public static final int DRAWING_HEIGHT = 800;
@@ -28,6 +28,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 
 	private KeyHandler keyControl;
 	
+	private JButton backButton, resetButton;
+	
 	Main w;
 
 	/**
@@ -43,6 +45,13 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		keyControl = new KeyHandler();
 		setBackground(Color.YELLOW);
 		screenRect = new Rectangle(0,0,DRAWING_WIDTH,DRAWING_HEIGHT);
+		backButton = new JButton("Back to Menu");
+		backButton.addActionListener(this);
+		add(backButton);
+		
+		resetButton = new JButton("Reset");
+		resetButton.addActionListener(this);
+		add(resetButton);
 		tiles = new Tile[7][7];
 		//tiles[4][4] = new Tile(true);
 		grid = new Rectangle[7][7];
@@ -79,12 +88,12 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		AffineTransform at = g2.getTransform();
 		g2.scale(ratioX, ratioY);
 
-		g2.setFont(new Font("font", Font.BOLD, 50));
+		g2.setFont(new Font("font", Font.BOLD, 30));
 		if(!currentPlayer) {
 			g2.setColor(Color.RED);
-			g2.drawString("Red's Turn", 275, 45);
+			g2.drawString("Red's Turn", 275, 50);
 		} else {
-			g2.drawString("Black's Turn", 250, 45);
+			g2.drawString("Black's Turn", 250, 50);
 		}
 
 		for (int row = 0; row < grid.length; row++) {
@@ -671,6 +680,25 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		turnRight();
 		turnRight();
 		turnRight();
+	}
+
+	@Override
+	
+	/**
+	 * 
+	 */
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if(o.equals(backButton))
+			w.changePanel("menu");
+		else if(o.equals(resetButton)) {
+			for(int x = 0; x < tiles.length; x++) {
+				for(int y = 0; y < tiles[0].length; y++) {
+					tiles[x][y] = null;
+				}
+			}
+		}
+			
 	}
 
 	

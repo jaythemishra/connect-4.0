@@ -65,9 +65,9 @@ public class SettingsPanel extends JPanel implements ActionListener {
 		} else if(o.equals(toggleColumnDeletion)) {
 			game.toggleColumnDeletion();
 			if(game.getColumnDelete()) {
-				toggleRowDeletion.setText("Turn off Column Deletion");
+				toggleColumnDeletion.setText("Turn off Column Deletion");
 			} else {
-				toggleRowDeletion.setText("Turn on Column Deletion");
+				toggleColumnDeletion.setText("Turn on Column Deletion");
 			}
 			repaint();
 		}
