@@ -553,6 +553,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			}
 		}
 		else
+			//else
 		{
 			for (int row = 0; row < grid.length; row++) {
 				for(int col = 0; col < grid[0].length; col++) {
