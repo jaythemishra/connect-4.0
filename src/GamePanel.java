@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	private Color[][] colors;
 	private Color[][] copyOfColors;
 
-	private boolean currentPlayer;
+	private boolean currentPlayer, rowDelete, rotation, columnDelete;
 
 	private KeyHandler keyControl;
 	
@@ -37,6 +37,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		super();
 		this.w = w;
 		currentPlayer = true;
+		rowDelete = true;
+		rotation = true;
+		columnDelete = true;
 		keyControl = new KeyHandler();
 		setBackground(Color.YELLOW);
 		screenRect = new Rectangle(0,0,DRAWING_WIDTH,DRAWING_HEIGHT);
@@ -58,7 +61,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	}
 
 	/**
-	 * The method that actually draws the game board and all the tiles on it, determining if the tiles should be red or black.
+	 * The method that actually draws the game board and all the tiles on it, determining if the tiles should be red or black. Also draws text saying whose turn it currently is.
 	 * @param g The Graphics object that allows the method to draw things on the screen.
 	 */
 	public void paintComponent(Graphics g)
@@ -122,6 +125,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		}
 	}
 
+	/**
+	 * Makes the tiles fall to fill the lowest open spaces in their columns.
+	 */
 	public void gravity() {
 		/*int delay = 1000; //milliseconds
 		ActionListener taskPerformer = new ActionListener() {
@@ -152,16 +158,18 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	 * @param col The column from which all the tiles shall be deleted.
 	 */
 	public void deleteRow(int row) {
-		for(int i = 0; i < 7; i++) {
-			tiles[i][row] = null;
-			colors[i][row]=Color.BLUE;
+		if(rowDelete) {
+			for(int i = 0; i < 7; i++) {
+				tiles[i][row] = null;
+				colors[i][row]=Color.BLUE;
+			}
+		
+			killBlueBar(30,row);
+			repaint();
+			currentPlayer = !currentPlayer;
+			stallGravityFor(30);
+			winner();
 		}
-	
-		killBlueBar(30,row);
-		repaint();
-		currentPlayer = !currentPlayer;
-		stallGravityFor(30);
-		winner();
 	}
 	
 	
@@ -173,11 +181,13 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	 * @param col The column from which all the tiles shall be deleted.
 	 */
 	public void deleteColumn(int col) {
-		for(int i = 0; i < 7; i++) {
-			tiles[col][i] = null;
+		if(columnDelete) {
+			for(int i = 0; i < 7; i++) {
+				tiles[col][i] = null;
+			}
+			currentPlayer = !currentPlayer;
+			winner();
 		}
-		currentPlayer = !currentPlayer;
-		winner();
 	}
 
 	/**
@@ -191,6 +201,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			return 2;
 	}
 	
+	/**
+	 * Returns the String representation of the current player
+	 * @return Red if it is Red's Turn, and Black if it is Black's turn/
+	 */
 	public String playerColor() {
 		if(currentPlayer)
 			return "Red";
@@ -200,7 +214,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 
 	/**
 	 * Determines if either player has won the game, and if they have, it creates a pop-up window that tells the players who has won.
-	 * @return The player who has won.
+	 * @return true if Red  has won, false if Black has won.
 	 */
 	public boolean winner() {
 		for(int row = 0; row < tiles.length; row++) {
@@ -263,8 +277,50 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	public KeyHandler getKeyHandler() {
 		return keyControl;
 	}
+	
+	/**
+	 * Toggles whether the players can delete rows of tiles from the board.
+	 */
+	public void toggleRowDeletion() {
+		rowDelete = !rowDelete;
+	}
+	
+	/**
+	 * Toggles whether the players can delete columns of tiles from the board.
+	 */
+	public void toggleColumnDeletion() {
+		columnDelete = !columnDelete;
+	}
+	
+	/**
+	 * Toggles whether the players can rotate the board.
+	 */
+	public void toggleRotation() {
+		rotation = !rotation;
+	}
+	
+	/**
+	 * Gets the current state of the rowDelete field.
+	 */
+	public boolean getRowDelete() {
+		return rowDelete;
+	}
+	
+	/**
+	 * Gets the current state of the columnDelete field.
+	 */
+	public boolean getColumnDelete() {
+		return columnDelete;
+	}
+	
+	/**
+	 * Gets the current state of the rotation field.
+	 */
+	public boolean getRotation() {
+		return rotation;
+	}
 
-
+	
 	public void stallGravityFor(int time)
 	{
 		oneSecond =time;
@@ -370,14 +426,14 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		}
 
 		/**
-		 * Method from the KeyListener interface.
+		 * Inherited abstract method from the KeyListener interface.
 		 */
 		public void keyPressed(KeyEvent e) {
 			keys.add(e.getKeyCode());
 		}
 
 		/**
-		 * Method from the KeyListener interface that enables players to delete columns from the board.
+		 * Inherited abstract method from the KeyListener interface that enables players to delete columns and rows from the board or rotate the board.
 		 */
 		public void keyReleased(KeyEvent e) {
 			Integer code = e.getKeyCode();
@@ -457,15 +513,11 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 
 
 			}
-			if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-				gravity();
-
-			}
 
 		}
 
 		/**
-		 * Method from the KeyListener interface.
+		 * Inherited abstract method from the KeyListener interface.
 		 */
 		public void keyTyped(KeyEvent e) {
 
@@ -483,7 +535,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 
 
 	/**
-	 * Method from the MouseListener interface.
+	 * Inherited abstract method from the MouseListener interface.
 	 */
 	public void mouseDragged(MouseEvent arg0) {
 		// TODO Auto-generated method stub
@@ -493,6 +545,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 
 
 	@Override
+	/**
+	 * Inherited abstract method that highlights the column a tile would be added to if the player clicked the mouse.
+	 */
 	public void mouseMoved(MouseEvent arg0) {
 		for (int row = 0; row < grid.length; row++) {
 			for(int col = 0; col < grid[0].length; col++) {
@@ -532,7 +587,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	}
 
 	/**
-	 * Method from the MouseListener interface.
+	 * Inherited abstract method from the MouseListener interface.
 	 */
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -540,7 +595,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	}
 
 	/**
-	 * Method from the MouseListener interface.
+	 * Inherited abstract method from the MouseListener interface.
 	 */
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
@@ -549,7 +604,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	}
 
 	/**
-	 * Method from the MouseListener interface.
+	 * Inherited abstract method from the MouseListener interface.
 	 */
 	@Override
 	public void mouseExited(MouseEvent arg0) {
@@ -558,7 +613,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	}
 
 	/**
-	 * Method from the MouseListener interface that allows players to add tiles to the board.
+	 * Inherited abstract method from the MouseListener interface that allows players to add tiles to the board using the mouse.
 	 */
 	@Override
 	public void mousePressed(MouseEvent arg0) {
@@ -590,21 +645,22 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	 */
 	public void turnRight()
 	{
-		Tile[][] temp= new Tile[7][7];
-
-		for(int row = 6; row>=0; row--)
-		{
-			Tile[] hold= new Tile[7];
-			
-			for(int i = 0; i< 7; i++)
-				hold[i]= tiles[i][row];
-
-			temp[6-row]=hold;
+		if(rotation) {
+			Tile[][] temp= new Tile[7][7];
+	
+			for(int row = 6; row>=0; row--)
+			{
+				Tile[] hold= new Tile[7];
+				
+				for(int i = 0; i< 7; i++)
+					hold[i]= tiles[i][row];
+	
+				temp[6-row]=hold;
+			}
+			tiles=temp;
+			repaint();
+			currentPlayer = !currentPlayer;
 		}
-		tiles=temp;
-		repaint();
-		currentPlayer = !currentPlayer;
-
 	}
 
 	/**

@@ -31,13 +31,15 @@ public class InstructionPanel extends JPanel implements ActionListener {
 	}
 	
 	/**
-	 * Changes the panel back to the menu.
+	 * Changes the visible JPanel back to the menu.
 	 */
 	public void actionPerformed(ActionEvent e) {
 		w.changePanel("menu");
 	}
 	
-	
+	/**
+	 * Draws the instruction text to the screen.
+	 */
 	public void paintComponent(Graphics g)
 	  {
 	    super.paintComponent(g);  // Call JPanel's paintComponent method to paint the background

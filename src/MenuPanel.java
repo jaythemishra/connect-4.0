@@ -38,7 +38,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 	}
 	
 	/**
-	 * The method that actually draws the menu.
+	 * Draws the game title.
 	 */
 	public void paintComponent(Graphics g)
 	  {
@@ -67,7 +67,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 	  }
 	
 	/**
-	 * Changes the panel to the game.
+	 * Changes the visible JPanel to the settings screen, instructions screen, or game screen.
 	 */
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();

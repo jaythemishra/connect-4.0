@@ -34,9 +34,9 @@ public class Main extends JFrame implements JayLayerListener {
 	    
 		MenuPanel menu = new MenuPanel(this);
 		InstructionPanel instructions = new InstructionPanel(this);
-		SettingsPanel settings = new SettingsPanel(this);
 
 	    GamePanel game = new GamePanel(this);
+		SettingsPanel settings = new SettingsPanel(this, game);
 	    
 	    addKeyListener(game.getKeyHandler());
 	
@@ -109,24 +109,36 @@ public class Main extends JFrame implements JayLayerListener {
 	}
 
 	@Override
+	/**
+	 * Inherited abstract method from JayLayerListener.
+	 */
 	public void musicStarted() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
+	/**
+	 * Inherited abstract method from JayLayerListener.
+	 */
 	public void musicStopped() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
+	/**
+	 * Inherited abstract method from JayLayerListener.
+	 */
 	public void playlistEnded() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
+	/**
+	 * Inherited abstract method from JayLayerListener.
+	 */
 	public void songEnded() {
 		// TODO Auto-generated method stub
 		

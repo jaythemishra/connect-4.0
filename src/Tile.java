@@ -130,7 +130,7 @@ public class Tile /*extends MovingImage*/ {
 
 	}*/
 
-	/*
+	/**
 	 * Returns the player that this Tile object belongs to.
 	 * @return player The player that this tiles belongs to.
 	 */
@@ -138,6 +138,10 @@ public class Tile /*extends MovingImage*/ {
 		return player;
 	}
 	
+	/**
+	 * Returns the string representation of the tile.
+	 * @return the string representation of the tile.
+	 */
 	public String toString()
 	{
 		String result= "";
