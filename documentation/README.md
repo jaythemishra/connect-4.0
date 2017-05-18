@@ -36,21 +36,21 @@ Features:
 
 		- Placing colored pieces: having a way for players to to place their piece on the board following the standard connect four rules (DONE)
 
-		- Rotation: Either rotate the board and tiles left or right by 90˚ (NOT DONE)
+		- Rotation: Either rotate the board and tiles left or right by 90˚ (DONE)
 
-		- Gravity: Once rotated the pieces don’t stick to their original side (instead they fall according the the rules of gravity). Pieces dropped on the board will also fall according to the rules of gravity (NOT DONE)
+		- Gravity: Once rotated the pieces don’t stick to their original side (instead they fall according the the rules of gravity). Pieces dropped on the board will also fall according to the rules of gravity (DONE)
 
-		- GUI: Start Screen and end screen wich instructions, start, and menu buttons. (NOT DONE)
+		- GUI: Start Screen and end screen with instructions, start, and menu buttons. (NOT DONE)
 
-		- Background music: background music necessary to hype up the players (NOT DONE)
+		- Background music: background music necessary to hype up the players (DONE)
 
 	Want-to-have
 
-		- Special feature (delete row): deletes an entire row (NOT DONE)
+		- Special feature (delete row): deletes an entire row (DONE)
 
 		- Special feature (delete column): deletes an entire column (DONE)
 
-		- Special feature (BOMB): makes the next tiled place a BOMB that explodes and deletes the 8 surrounding tiles. (DONE)
+		- Special feature (BOMB): makes the next tiled place a BOMB that explodes and deletes the 8 surrounding tiles. (NOT DONE)
 
 		- Settings Menu: select which “Special features” you want to enable or disable (NOT DONE)
 

@@ -24,6 +24,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 		playButton = new JButton("Play Game");
 
 
+		setBackground(Color.YELLOW);
 		//instructionButton.addActionListener(this);
 		//add(instructionButton);
 		//settingsButton.addActionListener(this);
@@ -54,8 +55,13 @@ public class MenuPanel extends JPanel implements ActionListener {
 	    AffineTransform at = g2.getTransform();
 	    g2.scale(ratioX, ratioY);
 
-	    g2.setBackground(Color.BLACK);
+
+	    //g2.setBackground(Color.BLACK);
 	    g2.setTransform(at);
+	    
+		g2.setFont(new Font("font", Font.BOLD, 100));
+	    g2.setColor(Color.RED);
+		g2.drawString("Connect 4.0", 100, 350);
 
 		// TODO Add any custom drawings here
 	  }
@@ -67,6 +73,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 		Object o = e.getSource();
 		if (o.equals(playButton)) {
 			w.changePanel("game");
+			w.switchSong();
 		} else if(o.equals(instructionButton)) {
 			w.changePanel("instructions");
 		} else if(o.equals(settingsButton)) {

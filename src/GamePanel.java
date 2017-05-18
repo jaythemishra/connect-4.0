@@ -27,15 +27,18 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	private boolean currentPlayer;
 
 	private KeyHandler keyControl;
+	
+	Main w;
 
 	/**
 	 * Creates a new GamePanel object that initializes the 2D array that will hold all the game tiles and another 2D array to hold the rectangles that get drawn on the screen.
 	 */
-	public GamePanel () {
+	public GamePanel (Main w) {
 		super();
+		this.w = w;
 		currentPlayer = true;
 		keyControl = new KeyHandler();
-		setBackground(Color.WHITE);
+		setBackground(Color.YELLOW);
 		screenRect = new Rectangle(0,0,DRAWING_WIDTH,DRAWING_HEIGHT);
 		tiles = new Tile[7][7];
 		//tiles[4][4] = new Tile(true);
@@ -73,10 +76,12 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		AffineTransform at = g2.getTransform();
 		g2.scale(ratioX, ratioY);
 
+		g2.setFont(new Font("font", Font.BOLD, 50));
 		if(!currentPlayer) {
-			g2.drawString("Red Player's Turn", 350, 50);
+			g2.setColor(Color.RED);
+			g2.drawString("Red's Turn", 275, 45);
 		} else {
-			g2.drawString("Black Player's Turn", 350, 50);
+			g2.drawString("Black's Turn", 250, 45);
 		}
 
 		for (int row = 0; row < grid.length; row++) {
@@ -185,6 +190,13 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		else
 			return 2;
 	}
+	
+	public String playerColor() {
+		if(currentPlayer)
+			return "Red";
+		else
+			return "Black";
+	}
 
 	/**
 	 * Determines if either player has won the game, and if they have, it creates a pop-up window that tells the players who has won.
@@ -199,7 +211,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					try{
 						if(tiles[row - 1][col].getPlayer() == player && tiles[row + 1][col].getPlayer() == player && tiles[row + 2][col].getPlayer() == player) {
 							//System.out.println("The winner is Player " + player);
-							JOptionPane.showMessageDialog(this, "Game Over! Player " + playerInt() + " wins!");
+							w.winnerSong();
+							JOptionPane.showMessageDialog(this, "Game Over! " +  playerColor() + " wins!");
 							return player;
 						}
 					} catch(ArrayIndexOutOfBoundsException e) {
@@ -208,7 +221,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					try{
 						if(tiles[row][col - 1].getPlayer() == player && tiles[row][col + 1].getPlayer() == player && tiles[row][col + 2].getPlayer() == player) {
 							//System.out.println("The winner is Player " + player);
-							JOptionPane.showMessageDialog(this, "Game Over! Player " + playerInt() + " wins!");
+							w.winnerSong();
+							JOptionPane.showMessageDialog(this, "Game Over! " +  playerColor() + " wins!");
 							return player;
 						}
 					} catch(ArrayIndexOutOfBoundsException e) {
@@ -218,7 +232,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					try{
 						if(tiles[row - 1][col - 1].getPlayer() == player && tiles[row + 1][col + 1].getPlayer() == player && tiles[row + 2][col + 2].getPlayer() == player) {
 							//System.out.println("The winner is Player " + player);
-							JOptionPane.showMessageDialog(this, "Game Over! Player " + playerInt() + " wins!");
+							w.winnerSong();
+							JOptionPane.showMessageDialog(this, "Game Over! " +  playerColor() + " wins!");
 							return player;
 						}
 					} catch(ArrayIndexOutOfBoundsException e) {
@@ -227,7 +242,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					try{
 						if(tiles[row - 1][col + 1].getPlayer() == player && tiles[row + 1][col - 1].getPlayer() == player && tiles[row + 2][col - 2].getPlayer() == player) {
 							//System.out.println("The winner is Player " + player);
-							JOptionPane.showMessageDialog(this, "Game Over! Player " + playerInt() + " wins!");
+							w.winnerSong();
+							JOptionPane.showMessageDialog(this, "Game Over! " +  playerColor() + " wins!");
 							return player;
 						}
 					} catch(ArrayIndexOutOfBoundsException e) {
@@ -587,7 +603,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		}
 		tiles=temp;
 		repaint();
-
+		currentPlayer = !currentPlayer;
 
 	}
 
