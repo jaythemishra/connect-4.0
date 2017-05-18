@@ -17,6 +17,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	private static final int RECT_WIDTH = (DRAWING_WIDTH - 100) / 7;
 
 	private Rectangle screenRect;
+	private boolean shiftHeld=false;
 
 	//private Tile mario;
 	private Tile[][] tiles;
@@ -27,9 +28,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	private boolean currentPlayer, rowDelete, rotation, columnDelete;
 
 	private KeyHandler keyControl;
-	
+
 	private JButton backButton, resetButton;
-	
+
 	Main w;
 
 	/**
@@ -48,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		backButton = new JButton("Back to Menu");
 		backButton.addActionListener(this);
 		add(backButton);
-		
+
 		resetButton = new JButton("Reset");
 		resetButton.addActionListener(this);
 		add(resetButton);
@@ -172,18 +173,18 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 				tiles[i][row] = null;
 				colors[i][row]=Color.BLUE;
 			}
-		
-			killBlueBar(30,row);
+
+			killBlueBar(30,row,true);
 			repaint();
 			currentPlayer = !currentPlayer;
 			stallGravityFor(30);
 			winner();
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 
 	/**
 	 * Deletes all the tiles in a specified column.
@@ -193,7 +194,11 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		if(columnDelete) {
 			for(int i = 0; i < 7; i++) {
 				tiles[col][i] = null;
+				colors[col][i]=Color.BLUE;
 			}
+
+			killBlueBar(30,col,false);
+			repaint();
 			currentPlayer = !currentPlayer;
 			winner();
 		}
@@ -209,7 +214,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		else
 			return 2;
 	}
-	
+
 	/**
 	 * Returns the String representation of the current player
 	 * @return Red if it is Red's Turn, and Black if it is Black's turn/
@@ -286,42 +291,42 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	public KeyHandler getKeyHandler() {
 		return keyControl;
 	}
-	
+
 	/**
 	 * Toggles whether the players can delete rows of tiles from the board.
 	 */
 	public void toggleRowDeletion() {
 		rowDelete = !rowDelete;
 	}
-	
+
 	/**
 	 * Toggles whether the players can delete columns of tiles from the board.
 	 */
 	public void toggleColumnDeletion() {
 		columnDelete = !columnDelete;
 	}
-	
+
 	/**
 	 * Toggles whether the players can rotate the board.
 	 */
 	public void toggleRotation() {
 		rotation = !rotation;
 	}
-	
+
 	/**
 	 * Gets the current state of the rowDelete field.
 	 */
 	public boolean getRowDelete() {
 		return rowDelete;
 	}
-	
+
 	/**
 	 * Gets the current state of the columnDelete field.
 	 */
 	public boolean getColumnDelete() {
 		return columnDelete;
 	}
-	
+
 	/**
 	 * Gets the current state of the rotation field.
 	 */
@@ -329,65 +334,55 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		return rotation;
 	}
 
-	
-	public void stallGravityFor(int time)
+
+	private void stallGravityFor(int time)
 	{
 		oneSecond =time;
 	}
-	public void killBlueBar(int time, int row)
+	private void killBlueBar(int time, int rowOrCol,boolean isrow)
 	{
-		blueBarTime=time;
-		blueRow=row;
+		if(isrow)
+		{
+			blueBarTime=time;
+			blueRow=rowOrCol;
+		}
+		else{
+			blueBarTime=time;
+			blueCol=rowOrCol;
+		}
+
 	}
-	public void resetRowToOrig(int row)
+
+
+	private void resetRowToOrig(int row)
 	{
 		for(int i = 0; i < 7; i++) {
-			
+
 			colors[i][row]=copyOfColors[i][row];
-			
+
 		}
 		repaint();
+	}
+	private void resetColToOrig(int col)
+	{
+		for(int i = 0; i < 7; i++) {
+
+			colors[col][i]=copyOfColors[col][i];
+
+		}
 	}
 
 
 	int oneSecond=60;
 	int blueBarTime=30;
 	int blueRow=0;
+	int blueCol=0;
 	/**
 	 * Runs the animations.
 	 */
 	public void run() {
 		while (true) { // Modify this to allow quitting
 			long startTime = System.currentTimeMillis();
-
-			/*if (keyControl.isPressed(KeyEvent.VK_1)) {
-			currentPlayer = !currentPlayer;
-	  		addTile(1, currentPlayer);
-		} if (keyControl.isPressed(KeyEvent.VK_2)) {
-			currentPlayer = !currentPlayer;
-	  		addTile(2, currentPlayer);
-		} if (keyControl.isPressed(KeyEvent.VK_3)) {
-			currentPlayer = !currentPlayer;
-	  		addTile(3, currentPlayer);
-		} if (keyControl.isPressed(KeyEvent.VK_4)) {
-			currentPlayer = !currentPlayer;
-	  		addTile(4, currentPlayer);
-		} if (keyControl.isPressed(KeyEvent.VK_5)) {
-			currentPlayer = !currentPlayer;
-	  		addTile(5, currentPlayer);
-		} if (keyControl.isPressed(KeyEvent.VK_6)) {
-			currentPlayer = !currentPlayer;
-	  		addTile(6, currentPlayer);
-		} if (keyControl.isPressed(KeyEvent.VK_7)) {
-			currentPlayer = !currentPlayer;
-	  		addTile(7, currentPlayer);
-		}*/
-
-			//mario.act(grid);
-
-			//if (!screenRect.intersects(mario))
-			//spawnNewMario();
-
 
 
 			if(oneSecond>0)
@@ -399,7 +394,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 				oneSecond--;
 				gravity();
 			}
-			
+
 			if(blueBarTime>0)
 			{
 				blueBarTime--;
@@ -408,6 +403,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			{
 				blueBarTime--;
 				resetRowToOrig(blueRow);
+				resetColToOrig(blueCol);
 			}
 			repaint();
 
@@ -439,6 +435,14 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 		 */
 		public void keyPressed(KeyEvent e) {
 			keys.add(e.getKeyCode());
+			if(e.getKeyCode() == KeyEvent.VK_SHIFT) 
+				shiftHeld=true;
+			mouseMoved(null);
+			
+				
+			
+
+
 		}
 
 		/**
@@ -448,78 +452,29 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 			Integer code = e.getKeyCode();
 			while(keys.contains(code))
 				keys.remove(code);
-			if(e.getKeyCode() == KeyEvent.VK_1) {
-				if(e.isShiftDown()) {
-					deleteRow(0);
-				}
-				else {
-					deleteColumn(0);
-				}
-			}
-			if(e.getKeyCode() == KeyEvent.VK_2) {
-				if(e.isShiftDown()) {
-					deleteRow(1);
-				}
-				else {
-					deleteColumn(1);
-				}
-			}
-			if(e.getKeyCode() == KeyEvent.VK_3) {
-				if(e.isShiftDown()) {
-					deleteRow(2);
-				}
-				else {
-					deleteColumn(2);
-				}
-			}
-			if(e.getKeyCode() == KeyEvent.VK_4) {
-				if(e.isShiftDown()) {
-					deleteRow(3);
-				}
-				else {
-					deleteColumn(3);
-				}
-			}
-			if(e.getKeyCode() == KeyEvent.VK_5) {
-				if(e.isShiftDown()) {
-					deleteRow(4);
-				}
-				else {
-					deleteColumn(4);
-				}
-			}
-			if(e.getKeyCode() == KeyEvent.VK_6) {
-				if(e.isShiftDown()) {
-					deleteRow(5);
-				}
-				else {
-					deleteColumn(5);
-				}
-			}
-			if(e.getKeyCode() == KeyEvent.VK_7) {
-				if(e.isShiftDown()) {
-					deleteRow(6);
-				}
-				else {
-					deleteColumn(6);
-				}
-			}
-
+		
 
 			if(e.getKeyCode() == KeyEvent.VK_LEFT) {
 				//Timer t = new Timer();
 				turnRight();
 
 				stallGravityFor(30);
-				
+
 
 			}
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				turnLeft();
 				stallGravityFor(30);
-				
-				
 
+
+
+
+			}
+
+			if(e.getKeyCode() == KeyEvent.VK_SHIFT) 
+			{
+				shiftHeld=false;
+				mouseMoved(null);
 
 			}
 
@@ -558,37 +513,79 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	 * Inherited abstract method that highlights the column a tile would be added to if the player clicked the mouse.
 	 */
 	public void mouseMoved(MouseEvent arg0) {
-		for (int row = 0; row < grid.length; row++) {
-			for(int col = 0; col < grid[0].length; col++) {
 
-				if(getMousePosition()!=null)
-				{
-					if(grid[row][col].contains(getMousePosition()))
+		if(shiftHeld)
+		{
+			for (int row = 0; row < grid.length; row++) {
+				for(int col = 0; col < grid[0].length; col++) {
+
+					if(getMousePosition()!=null)
 					{
-						//System.out.println(getMousePosition());
-
-						// chnages the current select colum to GRAY
-						for (int i = 0; i<grid.length; i++)
+						if(grid[row][col].contains(getMousePosition()))
 						{
-							colors[row][i]=Color.gray;
-							copyOfColors[row][i]=Color.gray;
-						}
+							//System.out.println(getMousePosition());
 
-						// Resets all other Colums back to YELLOW
-						for(int k = 0; k<7; k++)
-						{
-							if(k!=row)
+							// chnages the current select colum to GRAY
+							for (int i = 0; i<grid.length; i++)
 							{
-								for(int j=0; j<7; j++)
-								{
-									colors[k][j]=Color.yellow;
-									copyOfColors[k][j]=Color.yellow;
-								}
+								colors[i][col]=Color.gray;
+								copyOfColors[i][col]=Color.gray;
 							}
 
+							// Resets all other Colums back to YELLOW
+							for(int k = 0; k<7; k++)
+							{
+								if(k!=col)
+								{
+									for(int j=0; j<7; j++)
+									{
+										colors[j][k]=Color.yellow;
+										copyOfColors[j][k]=Color.yellow;
+									}
+								}
+
+							}
+							repaint();
+							break;
 						}
-						repaint();
-						break;
+					}
+				}
+			}
+		}
+		else
+		{
+			for (int row = 0; row < grid.length; row++) {
+				for(int col = 0; col < grid[0].length; col++) {
+
+					if(getMousePosition()!=null)
+					{
+						if(grid[row][col].contains(getMousePosition()))
+						{
+							//System.out.println(getMousePosition());
+
+							// chnages the current select colum to GRAY
+							for (int i = 0; i<grid.length; i++)
+							{
+								colors[row][i]=Color.gray;
+								copyOfColors[row][i]=Color.gray;
+							}
+
+							// Resets all other Colums back to YELLOW
+							for(int k = 0; k<7; k++)
+							{
+								if(k!=row)
+								{
+									for(int j=0; j<7; j++)
+									{
+										colors[k][j]=Color.yellow;
+										copyOfColors[k][j]=Color.yellow;
+									}
+								}
+
+							}
+							repaint();
+							break;
+						}
 					}
 				}
 			}
@@ -625,10 +622,12 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	 * Inherited abstract method from the MouseListener interface that allows players to add tiles to the board using the mouse.
 	 */
 	@Override
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent e) {
 		Point p = getMousePosition();
-		if(p!=null)
-		{
+
+		int butt= e.getButton();
+
+		if(p!=null&&butt==MouseEvent.BUTTON1){
 			for (int row = 0; row < grid.length; row++) {
 				for(int col = 0; col < grid[0].length; col++) {
 					if(grid[row][col].contains(p))
@@ -638,8 +637,32 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 					}
 				}
 			}
+
+		}
+		else if(p!=null&&butt==MouseEvent.BUTTON3)
+		{
+			if(shiftHeld)
+			{
+				for (int row = 0; row < grid.length; row++) {
+					for(int col = 0; col < grid[0].length; col++) {
+						if(grid[row][col].contains(p))
+							deleteRow(col);
+					}
+				}
+			}
+
+			else{
+				for (int row = 0; row < grid.length; row++) {
+					for(int col = 0; col < grid[0].length; col++) {
+						if(grid[row][col].contains(p))
+							deleteColumn(row);
+					}
+				}
+			}
 		}
 	}
+
+
 
 	/**
 	 * Method from the MouseListener interface.
@@ -656,14 +679,14 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	{
 		if(rotation) {
 			Tile[][] temp= new Tile[7][7];
-	
+
 			for(int row = 6; row>=0; row--)
 			{
 				Tile[] hold= new Tile[7];
-				
+
 				for(int i = 0; i< 7; i++)
 					hold[i]= tiles[i][row];
-	
+
 				temp[6-row]=hold;
 			}
 			tiles=temp;
@@ -683,7 +706,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	}
 
 	@Override
-	
+
 	/**
 	 * Allows players to go back to the menu from the game screen or to reset the game.
 	 */
@@ -698,8 +721,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 				}
 			}
 		}
-			
+
 	}
 
-	
+
 }
