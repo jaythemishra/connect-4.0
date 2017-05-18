@@ -685,7 +685,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener, 
 	@Override
 	
 	/**
-	 * 
+	 * Allows players to go back to the menu from the game screen or to reset the game.
 	 */
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
